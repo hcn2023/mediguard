@@ -7,7 +7,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 #     && rm -rf /tmp/pear \
 #     && docker-php-ext-enable redis
 
-WORKDIR /var/www
+WORKDIR /var/${USER}
 COPY . .
 
 COPY --from=composer:2.8.2 /usr/bin/composer  /usr/bin/composer
