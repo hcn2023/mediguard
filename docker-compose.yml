@@ -8,9 +8,9 @@ services:
         - APP_ENV=${APP_ENV}
     environment:
       - APP_ENV=${APP_ENV}
-    working_dir: /var/medicare
+    working_dir: /var/${APP_NAME}
     volumes:
-      - ./:/var/medicare
+      - ./:/var/${APP_NAME}
     ports:
       - 8000:8000
     depends_on:
