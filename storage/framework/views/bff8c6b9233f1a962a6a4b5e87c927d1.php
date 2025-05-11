@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Guardian Signup | MediGuard</title>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
 
@@ -22,7 +24,8 @@ document.getElementById("signupForm").addEventListener("submit", function(event)
     const email = document.querySelector("input[name='email']").value;
     const password = document.querySelector("input[name='password']").value;
 
-    fetch("https://mediguard.consatmi.com/api/guardian/signup", {
+    fetch("https://mediguard.connetmi.com/api/guardian/register", {
+
         method: "POST",
         headers: {
             "Content-Type": "application/json"

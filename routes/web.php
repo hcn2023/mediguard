@@ -16,8 +16,11 @@ use App\Http\Controller\TemplateController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect('/signup');
 });
+
+
+
 
 Route::get('/signup', function () {
     return view('signup');
