@@ -2,51 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Save Dosage - MediGuard</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Save Dosage</title>
+    <!-- Bootstrap CSS Link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Save Dosage</h2>
+        <form id="saveDosageForm">
+<div class="form-group">
+    <label for="medicationName">Medication Name:</label>
+    <input type="text" id="medicationName" name="medication_name" class="form-control" placeholder="Enter medication name">
+</div>
 
-<h2>Save Dosage</h2>
+            <div class="form-group">
+                <label for="dosage">Dosage:</label>
+                <input type="text" id="dosage" name="dosage" class="form-control" placeholder="Enter dosage">
+            </div>
+            <div class="form-group">
+                <label for="schedule">Schedule:</label>
+                <input type="text" id="schedule" name="schedule" class="form-control" placeholder="Enter schedule">
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Save Dosage</button>
+        </form>
+    </div>
 
-<form id="dosageForm">
-    <input type="text" name="medication_name" placeholder="Medication Name" required><br><br>
-    <input type="text" name="dosage" placeholder="Dosage" required><br><br>
-    <input type="text" name="schedule" placeholder="Schedule" required><br><br>
-    <button type="submit">Save Dosage</button>
-</form>
+    <!-- Optional: Add your JavaScript here -->
+    <script>
+        document.getElementById("saveDosageForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const medication_name = document.getElementById("medicationName").value;
+    const dosage = document.getElementById("dosage").value;
+    const schedule = document.getElementById("schedule").value;
 
-<script>
-document.getElementById("dosageForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    // Collect form data
-    const formData = new FormData(this);
-
-    // Send data to the backend API
-    fetch("https://mediguard.connetmi.com/api/save_dosage_schedule/", {
+    fetch("/api/guardian/adddosage", {
         method: "POST",
-        body: formData
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            medication_name: medication_name,
+            dosage: dosage,
+            schedule: schedule
+        })
     })
-    .then(response => {
-        // Check if response is ok (status 200)
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        // Success - show API message
-        console.log("Save Dosage Response:", data);
-        alert(data.message);
+        if (data.status === "success") {
+            alert("Dosage saved successfully!");
+        } else {
+            alert("An error occurred. Please try again later.");
+        }
     })
     .catch(error => {
-        // Error - show error message
         console.error("Error:", error);
-        alert("Failed to save dosage. Please try again.");
+        alert("An error occurred. Please try again later.");
     });
 });
-</script>
 
+    </script>
 </body>
 </html>

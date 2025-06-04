@@ -2,45 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Patient - MediGuard</title>
+    <title>Add Patient | MediGuard</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div class="container">
+        <h2>Add Patient</h2>
+        <form id="addPatientForm" method="POST">
+            <div class="form-group">
+                <label for="name">Patient Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter patient's name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Patient Age:</label>
+                <input type="number" id="age" name="age" placeholder="Enter patient's age" required>
+            </div>
+            <button type="submit">Add Patient</button>
+        </form>
+    </div>
 
-<h2>Add Patient</h2>
+    <script>
+        document.getElementById("addPatientForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
 
-<form id="patientForm">
-    <input type="text" name="name" placeholder="Patient Name" required><br><br>
-    <input type="text" name="age" placeholder="Patient Age" required><br><br>
-    <button type="submit">Add Patient</button>
-</form>
-
-<script>
-document.getElementById("patientForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    fetch("https://mediguard.connetmi.com/api/add_patient_details/", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Patient Response:", data);
-        alert(data.message);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Failed to add patient. Please try again.");
-    });
-});
-</script>
-
+            fetch("/api/guardian/addpatient", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name: name, age: age })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Patient added successfully!");
+                    window.location.href = "/dashboard";
+                } else {
+                    alert("Failed to add patient: " + (data.message || "Please try again."));
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again later.");
+            });
+        });
+    </script>
 </body>
 </html>

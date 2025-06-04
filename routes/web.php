@@ -45,3 +45,8 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
+
+use App\Http\Controllers\AuthController; // Adjust path if necessary
+
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/login', [AuthController::class, 'login']);
