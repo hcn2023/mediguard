@@ -89,3 +89,9 @@ Route::post('/guardian/adddosage', function(Request $request) {
     return response()->json(['status' => 'success']);
 });
 
+Route::get('/guardian/dosages', function() {
+    $dosages = DB::table('dosages')->get();
+    return response()->json($dosages);
+});
+
+

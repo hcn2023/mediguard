@@ -50,3 +50,10 @@ use App\Http\Controllers\AuthController; // Adjust path if necessary
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+
+use App\Http\Controllers\DosageController;
+
+Route::get('/add-dosage', [DosageController::class, 'create'])->name('dosages.create');
+Route::post('/add-dosage', [DosageController::class, 'store'])->name('dosages.store');
+
+Route::get('/dosage', [DosageController::class, 'index'])->name('dosages.index');
